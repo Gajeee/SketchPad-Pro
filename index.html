@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SketchPad Pro</title>
+  <meta name="description" content="A polished sketchpad built with DOM + Flexbox." />
+  <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="top-inner">
+      <div class="brand">
+        <div class="mark" aria-hidden="true">
+          <!-- Pencil mark (SVG) -->
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <path d="M14.7 4.3l5 5" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M4 20l3.2-.5c.4-.1.7-.2 1-.5L19.5 7.7a1.4 1.4 0 0 0 0-2l-1.2-1.2a1.4 1.4 0 0 0-2 0L5 15.8c-.3.3-.4.6-.5 1L4 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="title">SketchPad Pro</div>
+          <div class="sub" id="gridLabel">Grid: 16 × 16</div>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <button id="exportPngBtn" class="btn btn-primary" type="button" aria-label="Export drawing as PNG">
+          <span class="i" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 3v10" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M8 9l4 4 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M5 17v2h14v-2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+          </span>
+          Export PNG
+        </button>
+        <button id="downloadSettingsBtn" class="btn btn-ghost" type="button" aria-label="Download settings JSON">
+          <span class="i" aria-hidden="true">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M6 2h9l3 3v17H6V2Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              <path d="M9 11h6M9 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+            </svg>
+          </span>
+          Settings
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <main class="layout">
+    <!-- Left: controls -->
+    <aside class="sidebar" aria-label="Controls">
+      <section class="card">
+        <div class="card-h">
+          <div class="card-t">Tool</div>
+          <div class="card-s">Pick a mode</div>
+        </div>
+
+        <div class="seg" role="tablist" aria-label="Drawing modes">
+          <button class="segbtn is-active" data-mode="draw" role="tab" aria-selected="true">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 20l4.2-1c.3-.1.6-.2.8-.4L19.5 8a1.6 1.6 0 0 0 0-2.3l-1.2-1.2a1.6 1.6 0 0 0-2.3 0L6.6 13.9c-.2.2-.3.5-.4.8L4 20Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M13.2 6.8l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Draw
+          </button>
+          <button class="segbtn" data-mode="erase" role="tab" aria-selected="false">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M20 13L13 20H7l-3-3 9-9 7 7Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M6.5 11.5l6 6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Erase
+          </button>
+          <button class="segbtn" data-mode="rainbow" role="tab" aria-selected="false">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 18a8 8 0 0 1 16 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M7 18a5 5 0 0 1 10 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".75"/>
+                <path d="M10 18a2 2 0 0 1 4 0" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".5"/>
+              </svg>
+            </span>
+            Rainbow
+          </button>
+          <button class="segbtn" data-mode="shade" role="tab" aria-selected="false">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M12 3l8 4v10l-8 4-8-4V7l8-4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M8 10h8M8 14h8" stroke="currentColor" stroke-width="2" stroke-linecap="round" opacity=".7"/>
+              </svg>
+            </span>
+            Shade
+          </button>
+        </div>
+
+        <div class="hint">
+          Drag to draw • Hold <kbd>Shift</kbd> to erase • <kbd>Ctrl/⌘</kbd>+<kbd>Z</kbd> undo
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-h">
+          <div class="card-t">Color</div>
+          <div class="card-s">Pick a brush</div>
+        </div>
+
+        <div class="colorRow">
+          <label class="colorPick">
+            <span class="cap">Brush</span>
+            <input id="colorInput" type="color" value="#2B7FFF" aria-label="Pick brush color" />
+          </label>
+
+          <label class="colorPick">
+            <span class="cap">BG</span>
+            <input id="bgInput" type="color" value="#0B0F1A" aria-label="Pick background color" />
+          </label>
+        </div>
+
+        <div class="swatches" aria-label="Color swatches">
+          <button class="sw" data-color="#2B7FFF" style="--c:#2B7FFF" aria-label="Blue swatch"></button>
+          <button class="sw" data-color="#7C3AED" style="--c:#7C3AED" aria-label="Purple swatch"></button>
+          <button class="sw" data-color="#00D2FF" style="--c:#00D2FF" aria-label="Cyan swatch"></button>
+          <button class="sw" data-color="#22C55E" style="--c:#22C55E" aria-label="Green swatch"></button>
+          <button class="sw" data-color="#F97316" style="--c:#F97316" aria-label="Orange swatch"></button>
+          <button class="sw" data-color="#EF4444" style="--c:#EF4444" aria-label="Red swatch"></button>
+          <button class="sw" data-color="#EAB308" style="--c:#EAB308" aria-label="Yellow swatch"></button>
+          <button class="sw" data-color="#F5F5F5" style="--c:#F5F5F5" aria-label="White swatch"></button>
+        </div>
+
+        <div class="mini">
+          Shade uses your current brush color as the base.
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-h">
+          <div class="card-t">Grid</div>
+          <div class="card-s">Resize safely</div>
+        </div>
+
+        <div class="gridCtl">
+          <div class="gridTop">
+            <span>Size</span>
+            <span class="pill" id="gridSizeValue">16</span>
+          </div>
+          <input id="gridSlider" type="range" min="1" max="100" value="16" step="1" aria-label="Grid size slider" />
+          <div class="mini">Slide to resize • release to apply (max 100)</div>
+        </div>
+
+        <div class="btnRow">
+          <button id="clearBtn" class="btn" type="button" aria-label="Clear grid (C)">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 6h16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                <path d="M8 6V4h8v2" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                <path d="M7 6l1 14h8l1-14" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+              </svg>
+            </span>
+            Clear
+          </button>
+          <button id="undoBtn" class="btn" type="button" aria-label="Undo (Ctrl+Z)">
+            <span class="i" aria-hidden="true">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M9 7H4v5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                <path d="M4 12c2.3-3.3 6-5 10-5 4.4 0 8 3.6 8 8" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              </svg>
+            </span>
+            Undo
+          </button>
+        </div>
+
+        <div class="status" id="statusText">Ready</div>
+      </section>
+    </aside>
+
+    <!-- Right: canvas -->
+    <section class="canvasWrap" aria-label="Canvas">
+      <div class="canvasCard">
+        <div id="container" class="container" aria-label="drawing grid" role="application"></div>
+        <div class="canvasFoot">
+          <span>Tip: Drag fast? Works on touch too.</span>
+          <span class="dot"></span>
+          <span>Made by <strong>gajee</strong> &amp; <strong>Ghub</strong></span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
